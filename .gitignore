@@ -1,0 +1,4 @@
+﻿*.idea
+.exe
+main.go
+config.json

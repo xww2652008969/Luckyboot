@@ -1,0 +1,16 @@
+github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
+github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/xww2652008969/wbot v0.0.0-20250424033754-c99407c41f29 h1:jsAc2PUNC24z4lETVrV75o9tNkljsjOgygZIepp7QQ4=
+github.com/xww2652008969/wbot v0.0.0-20250424033754-c99407c41f29/go.mod h1:NKP0by3twd3kLBMDZD7Hf5eOjsSXufc5vqgsQrXfJsE=
+github.com/xww2652008969/wbot v1.1.6 h1:VbsOoi4JZPNJHyRubqpgGB8Rc0X4A48HgI3jjw+Q/gE=
+github.com/xww2652008969/wbot v1.1.6/go.mod h1:NLkQb8PHvdyJ9mnAYymZ1c1oZExuqry0W+Rsb4t5/qA=
+github.com/xww2652008969/wbot v1.1.7 h1:juSXj5X50+kvFZxLXsGsdMGzYhNsQim+gPrgviKxsSQ=
+github.com/xww2652008969/wbot v1.1.7/go.mod h1:NKP0by3twd3kLBMDZD7Hf5eOjsSXufc5vqgsQrXfJsE=
+github.com/xww2652008969/wbot v1.1.8 h1:bOx/h8PM9KpDOPsa/OiJaL8TjmwvPRFXyYfewpaa5uU=
+github.com/xww2652008969/wbot v1.1.8/go.mod h1:NKP0by3twd3kLBMDZD7Hf5eOjsSXufc5vqgsQrXfJsE=
+github.com/xww2652008969/wbot v1.1.9-0.20250423161352-10a767295ca1 h1:hSN16vKMmbbrlAAiKL+zhIRdH+sQRLNVrXjonD9z3SY=
+github.com/xww2652008969/wbot v1.1.9-0.20250423161352-10a767295ca1/go.mod h1:NKP0by3twd3kLBMDZD7Hf5eOjsSXufc5vqgsQrXfJsE=
+github.com/xww2652008969/wbot v1.1.9-0.20250423164014-c4a74d247fea h1:l8xJY+xWLVd0Vp4uHxYy3wGDzcEDV12Bo7zqdYjpaCI=
+github.com/xww2652008969/wbot v1.1.9-0.20250423164014-c4a74d247fea/go.mod h1:NKP0by3twd3kLBMDZD7Hf5eOjsSXufc5vqgsQrXfJsE=
+github.com/xww2652008969/wbot v1.1.9-0.20250423164853-9432ead1e8d5 h1:WcEkxfUGbqO1EsuUCPrCmvItvoKHVcC4pa0DHXC97Kw=
+github.com/xww2652008969/wbot v1.1.9-0.20250423164853-9432ead1e8d5/go.mod h1:NKP0by3twd3kLBMDZD7Hf5eOjsSXufc5vqgsQrXfJsE=
