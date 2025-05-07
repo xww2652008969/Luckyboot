@@ -27,20 +27,26 @@ func init() {
 		"hmmt不在",
 		"厨房有煤气灶自己拧着玩",
 		"操作太快了，等会再试试吧",
+		"手指该充电啦~滴滴滴电量不足警告！",
+		"这是hmmt的草莓奶油城堡~禁止投喂手指",
+		"再戳的话...会触发害羞の隐藏剧情哦！",
+		"操作太快像在打音游呢~要掉血啦！",
+		"手指该做SPA啦~再动要变成胡萝卜啦！",
+		"hmmt宝宝在睡觉~不许戳醒它！",
+		"这是游戏存档点~乱戳会覆盖进度哦！",
 	}
 }
 func HandleNudgeEvent() client.Event {
 	return func(client client.Client, message client.Message) {
-		if message.TargetId != message.SelfId && (message.SubType != "poke") {
-			return
+		if message.TargetId == message.SelfId && message.SubType == "poke" {
+			sendAPI := client.Newsenapi()
+			info, err := sendAPI.GetGroupMemberInfo(message.GroupId, message.UserId)
+			if err != nil {
+				return
+			}
+			username := utils.Getusername(info.Data.Card, info.Data.Nickname)
+			sendAPI.Getchatmessage().AddAt(message.UserId).AddText(" ").AddText(strings.ReplaceAll(nudge[utils.Randint(0, len(nudge)-1)], "userName", username)).Group_id = message.GroupId
+			sendAPI.SendGroupMsg()
 		}
-		sendAPI := client.Newsenapi()
-		info, err := sendAPI.GetGroupMemberInfo(message.GroupId, message.UserId)
-		if err != nil {
-			return
-		}
-		username := utils.Getusername(info.Data.Card, info.Data.Nickname)
-		sendAPI.Getchatmessage().AddAt(message.UserId).AddText(strings.ReplaceAll(nudge[utils.Randint(0, len(nudge)-1)], "userName", username)).Group_id = message.GroupId
-		sendAPI.SendGroupMsg()
 	}
 }
