@@ -1,14 +1,60 @@
 package Fuckbili
 
 import (
+	"Lucky/utils"
 	"encoding/json"
 	"errors"
 	"github.com/xww2652008969/wbot/client"
-	"github.com/xww2652008969/wbot/client/utils"
 	"io"
 	"net/http"
 	"regexp"
 )
+
+type Fuckbili struct {
+}
+
+func (f Fuckbili) PluginName() string {
+	return "Fuckbili"
+}
+
+func (f Fuckbili) PluginVersion() string {
+	return "1.0.0"
+}
+
+func (f Fuckbili) PluginAuthor() string {
+	return "Xww"
+}
+
+func (f Fuckbili) GroupHandle(client client.Client, message client.Message) {
+	if message.Message[0].Type == "json" {
+		var b Qqcard
+		json.Unmarshal([]byte(message.Message[0].Data.Data), &b)
+		if b.Meta.Detail1.Appid == "1109937557" {
+			url, err := getRealBilibiliUrl(b.Meta.Detail1.Qqdocurl)
+			if err == nil {
+				bili, bierr := getbilidata(url)
+				if bierr != nil {
+					return
+				}
+				sendAPI := client.Newsenapi()
+				sendAPI.Getchatmessage().Addreply(message.MessageId).AddText("去你麻麻的小程序\n").AddText(bili.Data.Pages[0].Part + "\n").AddImage(bili.Data.Pages[0].FirstFrame).AddText("https://www.bilibili.com/video/" + url).Group_id = message.GroupId
+				sendAPI.SendGroupMsg()
+			}
+		}
+	}
+}
+
+func (f Fuckbili) PrivateHandle(client client.Client, message client.Message) {
+}
+
+func (f Fuckbili) MessageSendhandle(client client.Client, message client.Message) {
+}
+
+func (f Fuckbili) NoticeHandle(client client.Client, message client.Message) {
+}
+
+func (f Fuckbili) Push(client *client.Client) {
+}
 
 func getRealBilibiliUrl(shortUrl string) (string, error) {
 	// 创建一个 HTTP 客户端
@@ -240,25 +286,4 @@ type Bili struct {
 		IsStoryPlay       int    `json:"is_story_play"`
 		IsViewSelf        bool   `json:"is_view_self"`
 	} `json:"data"`
-}
-
-func HandleBili() client.Event {
-	return func(client client.Client, message client.Message) {
-		if message.Message[0].Type == "json" {
-			var b Qqcard
-			json.Unmarshal([]byte(message.Message[0].Data.Data), &b)
-			if b.Meta.Detail1.Appid == "1109937557" {
-				url, err := getRealBilibiliUrl(b.Meta.Detail1.Qqdocurl)
-				if err == nil {
-					bili, bierr := getbilidata(url)
-					if bierr != nil {
-						return
-					}
-					sendAPI := client.Newsenapi()
-					sendAPI.Getchatmessage().Addreply(message.MessageId).AddText("去你麻麻的小程序\n").AddText(bili.Data.Pages[0].Part + "\n").AddImage(bili.Data.Pages[0].FirstFrame).AddText("https://www.bilibili.com/video/" + url).Group_id = message.GroupId
-					sendAPI.SendGroupMsg()
-				}
-			}
-		}
-	}
 }

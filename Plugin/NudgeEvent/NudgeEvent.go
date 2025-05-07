@@ -36,17 +36,43 @@ func init() {
 		"这是游戏存档点~乱戳会覆盖进度哦！",
 	}
 }
-func HandleNudgeEvent() client.Event {
-	return func(client client.Client, message client.Message) {
-		if message.TargetId == message.SelfId && message.SubType == "poke" {
-			sendAPI := client.Newsenapi()
-			info, err := sendAPI.GetGroupMemberInfo(message.GroupId, message.UserId)
-			if err != nil {
-				return
-			}
-			username := utils.Getusername(info.Data.Card, info.Data.Nickname)
-			sendAPI.Getchatmessage().AddAt(message.UserId).AddText(" ").AddText(strings.ReplaceAll(nudge[utils.Randint(0, len(nudge)-1)], "userName", username)).Group_id = message.GroupId
-			sendAPI.SendGroupMsg()
+
+type NudgeEventPlugin struct {
+}
+
+func (n NudgeEventPlugin) PluginName() string {
+	return "NudgeEvent"
+}
+
+func (n NudgeEventPlugin) PluginVersion() string {
+	return "1.0.0"
+}
+
+func (n NudgeEventPlugin) PluginAuthor() string {
+	return "xww"
+}
+
+func (n NudgeEventPlugin) GroupHandle(client client.Client, message client.Message) {
+}
+
+func (n NudgeEventPlugin) PrivateHandle(client client.Client, message client.Message) {
+}
+
+func (n NudgeEventPlugin) MessageSendhandle(client client.Client, message client.Message) {
+}
+
+func (n NudgeEventPlugin) NoticeHandle(client client.Client, message client.Message) {
+	if message.TargetId == message.SelfId && message.SubType == "poke" {
+		sendAPI := client.Newsenapi()
+		info, err := sendAPI.GetGroupMemberInfo(message.GroupId, message.UserId)
+		if err != nil {
+			return
 		}
+		username := utils.Getusername(info.Data.Card, info.Data.Nickname)
+		sendAPI.Getchatmessage().AddAt(message.UserId).AddText(" ").AddText(strings.ReplaceAll(nudge[utils.Randint(0, len(nudge)-1)], "userName", username)).Group_id = message.GroupId
+		sendAPI.SendGroupMsg()
 	}
+}
+
+func (n NudgeEventPlugin) Push(client *client.Client) {
 }

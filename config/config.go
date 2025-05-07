@@ -1,17 +1,10 @@
 package config
 
 import (
+	"Lucky/utils"
 	"encoding/json"
 	"errors"
-	"github.com/xww2652008969/wbot/client"
-	"github.com/xww2652008969/wbot/client/utils"
 )
-
-var GroupHandle = make([]client.Event, 0)
-var PrivateHandle = make([]client.Event, 0)
-var NoticeHandle = make([]client.Event, 0)
-var MessageSenthandle = make([]client.Event, 0)
-var Push = make([]client.Push, 0)
 
 type config struct {
 	Wsurl      string `json:"wsurl"`
@@ -22,7 +15,7 @@ type config struct {
 
 func Read() (config, error) {
 	var c config
-	data := utils.Readfile("config.json")
+	data, _ := utils.Readfile("config.json")
 	if len(data) > 0 {
 		json.Unmarshal(data, &c)
 		return c, nil

@@ -218,29 +218,54 @@ func init() {
 		"╭◜◝ ͡ ◜ ╮ \n(    好想    ) \n╰◟  ͜ ╭◜◝ ͡ ◜ ͡ ◝  ╮\n　 　 ( 和target_name结婚 )\n╭◜◝ ͡ ◜◝ ͡  ◜ ╮◞ ╯\n(   然后吃软饭  ) \n╰◟  ͜ ◞ ͜ ◟ ͜ ◞◞╯\n₍ᐢ..ᐢ₎ᐝ ",
 		"本人不懂二次元，对于你们这种痴迷于虚拟角色的行为，我很是不理解，我感觉应该分清现实和虚拟，他们好看归好看，但终究不是真实存在的，我们要活在现实，而不是盯着纸片人，我的生活很充实，今天是我和target_name的婚礼，大家记得带点彩礼"}
 }
-func HandleCrazy() client.Event {
-	return func(client client.Client, message client.Message) {
-		var username string
-		if !strings.Contains(message.RawMessage, "发病") {
+
+type CrazyPlugin struct{}
+
+func (c CrazyPlugin) PluginName() string {
+	return "Crazy"
+}
+
+func (c CrazyPlugin) PluginVersion() string {
+	return "1.0.0"
+}
+
+func (c CrazyPlugin) PluginAuthor() string {
+	return "xww"
+}
+
+func (c CrazyPlugin) GroupHandle(client client.Client, message client.Message) {
+	var username string
+	if !strings.Contains(message.RawMessage, "发病") {
+		return
+	}
+	api := client.Newsenapi()
+	flag, atqq := utils.Isat(message)
+	if flag {
+		groupNemberInfo, err := api.GetGroupMemberInfo(message.GroupId, atqq)
+		if err != nil {
+			fmt.Println(err)
 			return
 		}
-		api := client.Newsenapi()
-		flag, atqq := utils.Isat(message)
-		if flag {
-			groupNemberInfo, err := api.GetGroupMemberInfo(message.GroupId, atqq)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-			username = utils.Getusername(groupNemberInfo.Data.Card, groupNemberInfo.Data.Nickname)
-		} else {
-			username = utils.Getusername(message.Sender.Card, message.Sender.Nickname)
-		}
-		ms := msglist[utils.Randint(0, len(msglist))]
-		newms := strings.ReplaceAll(ms, "target_name", username)
-		chatmessage := api.Getchatmessage()
-		chatmessage.AddText(newms)
-		chatmessage.Group_id = message.GroupId
-		api.SendGroupMsg()
+		username = utils.Getusername(groupNemberInfo.Data.Card, groupNemberInfo.Data.Nickname)
+	} else {
+		username = utils.Getusername(message.Sender.Card, message.Sender.Nickname)
 	}
+	ms := msglist[utils.Randint(0, len(msglist))]
+	newms := strings.ReplaceAll(ms, "target_name", username)
+	chatmessage := api.Getchatmessage()
+	chatmessage.AddText(newms)
+	chatmessage.Group_id = message.GroupId
+	api.SendGroupMsg()
+}
+
+func (c CrazyPlugin) PrivateHandle(client client.Client, message client.Message) {
+}
+
+func (c CrazyPlugin) MessageSendhandle(client client.Client, message client.Message) {
+}
+
+func (c CrazyPlugin) NoticeHandle(client client.Client, message client.Message) {
+}
+
+func (c CrazyPlugin) Push(client *client.Client) {
 }
